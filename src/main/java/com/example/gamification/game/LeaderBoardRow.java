@@ -13,6 +13,7 @@ public class LeaderBoardRow {
     Long totalScore;
     @With
     List<String> badges;
+
     public LeaderBoardRow(final Long userId, final Long totalScore) {
         this.userId = userId;
         this.totalScore = totalScore;
