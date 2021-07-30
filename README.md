@@ -4,6 +4,9 @@
 @https://github.com/andreykirson/mental_arithmetic_front_end
 
 ### Project architecture
+![image](https://user-images.githubusercontent.com/32255911/127610771-f4938eae-a95b-43ff-b21d-cccfbcfff900.png)
+
+### Domain model
 ![image](https://user-images.githubusercontent.com/32255911/127287252-7fe39198-da23-4a23-9165-ead3f8e459e9.png)
 
 ###View of menu

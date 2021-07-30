@@ -22,10 +22,10 @@ public class GameServiceImpl implements GameService {
     // Spring injects all the @Component beans in this list
     private final List<BadgeProcessor> badgeProcessors;
 
-
     @Override
     public GameResult newAttemptForUser(final ChallengeSolvedDTO challenge) {
         // We give points only if it's correct
+
         if (challenge.isCorrect()) {
             ScoreCard scoreCard = new ScoreCard(challenge.getUserId(), challenge.getAttemptId());
             scoreRepository.save(scoreCard);
