@@ -56,7 +56,7 @@ public class GameServiceImpl implements GameService {
      * to give new badges in case their conditions are met.
      */
 
-    private List<BadgeCard> processForBadges(final ChallengeSolvedDTO solvedChallenge) {
+   List<BadgeCard> processForBadges(final ChallengeSolvedDTO solvedChallenge) {
 
         Optional<Integer> optTotalScore = scoreRepository.getTotalScoreForUser(solvedChallenge.getUserId());
 

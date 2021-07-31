@@ -28,4 +28,8 @@ public class ScoreCard {
     public ScoreCard(final Long userId, final Long attemptId) {
         this(null, userId, attemptId, System.currentTimeMillis(), DEFAULT_SCORE);
     }
+
+    public int getScore() {
+        return this.score;
+    }
 }
