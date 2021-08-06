@@ -1,11 +1,12 @@
 package com.example.gamification.game;
 
 import com.example.gamification.badgeprocessors.BadgeProcessor;
-import com.example.gamification.challenge.ChallengeSolvedDTO;
+import com.example.gamification.challenge.ChallengeSolvedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +23,9 @@ public class GameServiceImpl implements GameService {
     // Spring injects all the @Component beans in this list
     private final List<BadgeProcessor> badgeProcessors;
 
+    @Transactional
     @Override
-    public GameResult newAttemptForUser(final ChallengeSolvedDTO challenge) {
+    public GameResult newAttemptForUser(final ChallengeSolvedEvent challenge) {
         // We give points only if it's correct
 
         if (challenge.isCorrect()) {
@@ -36,10 +38,10 @@ public class GameServiceImpl implements GameService {
                     challenge.getAttemptId()
             );
             List<BadgeCard> badgeCards = processForBadges(challenge);
+
             return new GameResult(
                     scoreCard.getScore(),
-                    badgeCards.stream().map(BadgeCard::getBadgeType)
-                            .collect(Collectors.toList())
+                    badgeCards.stream().map(BadgeCard::getBadgeType).collect(Collectors.toList())
             );
         } else {
             log.info("Attempt id {} is not correct. User {} does not get score.",
@@ -56,7 +58,7 @@ public class GameServiceImpl implements GameService {
      * to give new badges in case their conditions are met.
      */
 
-    private List<BadgeCard> processForBadges(final ChallengeSolvedDTO solvedChallenge) {
+    private List<BadgeCard> processForBadges(final ChallengeSolvedEvent solvedChallenge) {
         Optional<Integer> optTotalScore = scoreRepository.getTotalScoreForUser(solvedChallenge.getUserId());
         if (optTotalScore.isEmpty()) return Collections.emptyList();
         int totalScore = optTotalScore.get();

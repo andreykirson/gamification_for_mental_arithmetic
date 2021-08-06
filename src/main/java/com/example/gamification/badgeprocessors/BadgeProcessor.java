@@ -1,6 +1,6 @@
 package com.example.gamification.badgeprocessors;
 
-import com.example.gamification.challenge.ChallengeSolvedDTO;
+import com.example.gamification.challenge.ChallengeSolvedEvent;
 import com.example.gamification.game.BadgeType;
 import com.example.gamification.game.ScoreCard;
 
@@ -17,7 +17,7 @@ public interface BadgeProcessor {
     Optional<BadgeType> processForOptionalBadge(
             int currentScore,
             List<ScoreCard> scoreCardList,
-            ChallengeSolvedDTO solved);
+            ChallengeSolvedEvent solved);
     /**
      * @return the BadgeType object that this processor is handling. You can use
      * it to filter processors according to your needs.

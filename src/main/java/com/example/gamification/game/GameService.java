@@ -1,6 +1,6 @@
 package com.example.gamification.game;
 
-import com.example.gamification.challenge.ChallengeSolvedDTO;
+import com.example.gamification.challenge.ChallengeSolvedEvent;
 import lombok.Value;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public interface GameService {
      * @return a {@link GameResult} object containing the new score and badge
      * cards obtained
      */
-    GameResult newAttemptForUser(ChallengeSolvedDTO challenge);
+    GameResult newAttemptForUser(ChallengeSolvedEvent challenge);
 
     @Value
     class GameResult {
