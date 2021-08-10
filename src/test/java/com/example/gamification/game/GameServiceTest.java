@@ -1,7 +1,7 @@
 package com.example.gamification.game;
 
 import com.example.gamification.badgeprocessors.BadgeProcessor;
-import com.example.gamification.challenge.ChallengeSolvedDTO;
+import com.example.gamification.challenge.ChallengeSolvedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,18 +33,18 @@ class GameServiceTest {
     @Test
     public void whenAttemptIsCorrect() {
         //given
-        ChallengeSolvedDTO challengeSolvedDTO = new ChallengeSolvedDTO(1, true, 10, 20, 1, "user");
-        ScoreCard scoreCard = new ScoreCard(challengeSolvedDTO.getUserId(), challengeSolvedDTO.getAttemptId());
+        ChallengeSolvedEvent challengeSolvedEvent = new ChallengeSolvedEvent(1, true, 10, 20, 1, "user");
+        ScoreCard scoreCard = new ScoreCard(challengeSolvedEvent.getUserId(), challengeSolvedEvent.getAttemptId());
         given(scoreRepository.save(scoreCard)).willReturn(scoreCard);
         given(scoreRepository.getTotalScoreForUser(1L)).willReturn(Optional.of(10));
         given(scoreRepository.findByUserIdOrderByScoreTimestampDesc(1L)).willReturn(List.of(scoreCard));
         given(badgeRepository.findByUserIdOrderByBadgeTimestampDesc(1L)).
                 willReturn(List.of());
         given(badgeProcessors.badgeType()).willReturn(BadgeType.FIRST_WON);
-        given(badgeProcessors.processForOptionalBadge(10, List.of(scoreCard), challengeSolvedDTO)).
+        given(badgeProcessors.processForOptionalBadge(10, List.of(scoreCard), challengeSolvedEvent)).
                 willReturn(Optional.of(BadgeType.FIRST_WON));
         //when
-        final GameService.GameResult gameResult = gameService.newAttemptForUser(challengeSolvedDTO);
+        final GameService.GameResult gameResult = gameService.newAttemptForUser(challengeSolvedEvent);
         //then
         then(gameResult).isEqualTo(new GameService.GameResult(10, List.of(BadgeType.FIRST_WON)));
     }
@@ -52,9 +52,9 @@ class GameServiceTest {
     @Test
     public void whenAttemptIsNotCorrect() {
         //given
-        ChallengeSolvedDTO challengeSolvedDTO = new ChallengeSolvedDTO(1, false, 10, 20, 1, "user");
+        ChallengeSolvedEvent challengeSolvedEvent = new ChallengeSolvedEvent(1, false, 10, 20, 1, "user");
         // when
-        final GameService.GameResult gameResult = gameService.newAttemptForUser(challengeSolvedDTO);
+        final GameService.GameResult gameResult = gameService.newAttemptForUser(challengeSolvedEvent);
         //then
         then(gameResult).isEqualTo(new GameService.GameResult(0, List.of()));
 
