@@ -16,9 +16,7 @@ configurations {
 }
 
 bootRun {
-	if (project.hasProperty('args')) {
-		args project.args.split(',')
-	}
+	systemProperties = System.properties
 }
 
 repositories {
@@ -43,7 +41,7 @@ dependencies {
 		exclude group: 'org.springframework.cloud', module: "spring-cloud-starter-netflix-ribbon"
 	}
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-config', version: '3.0.3'
-
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: '3.0.3'
 }
 
 test {
