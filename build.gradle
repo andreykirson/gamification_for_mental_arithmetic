@@ -15,6 +15,10 @@ configurations {
 	}
 }
 
+bootRun {
+	systemProperties = System.properties
+}
+
 repositories {
 	mavenCentral()
 }
@@ -32,6 +36,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.3'
 	implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: '2.12.4'
 	implementation 'org.springframework.boot:spring-boot-starter-amqp:2.5.3'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.5.3'
+	implementation (group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-discovery', version: '3.0.3') {
+		exclude group: 'org.springframework.cloud', module: "spring-cloud-starter-netflix-ribbon"
+	}
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-config', version: '3.0.3'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: '3.0.3'
 }
 
 test {
